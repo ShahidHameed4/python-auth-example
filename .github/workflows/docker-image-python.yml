@@ -15,4 +15,8 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
+      run:  |
+        echo "${{ secrets.DOCKERPW }}" | docker login -u "shahid0404" --password-stdin 
+        docker build -t python-app .
+        docker tag python-app shahid0404/python-auth-example
+        docker push shahid0404/python-auth-example
